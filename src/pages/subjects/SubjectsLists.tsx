@@ -24,43 +24,135 @@ const SubjectsLists = () => {
   const [selectedDepartment,setSelectedDepartment]=useState("all")
   
 
-  const subjectTable=useTable<Subject>({
-    columns : useMemo<ColumnDef<Subject>[]>(
-    () => [
-      {
-        id: "code",
-        accessorKey: "code",
-        size:100,
-        header: () => <p className="ml-2">Code</p>,
-        cell: ({ getValue }) =>  (
-            <Badge className="px-2 py-1 rounded-md bg-neutral-800 text-gray-200">
-              {getValue<string>()}
-            </Badge>
-          )
+  // const subjectTable=useTable<Subject>({
+  //   columns : useMemo<ColumnDef<Subject>[]>(
+  //   () => [
+  //     {
+  //       id: "code",
+  //       accessorKey: "code",
+  //       size:100,
+  //       header: () => <p className="ml-2">Code</p>,
+  //       cell: ({ getValue }) =>  (
+  //           <Badge className="px-2 py-1 rounded-md bg-neutral-800 text-gray-200">
+  //             {getValue<string>()}
+  //           </Badge>
+  //         )
         
-      },
-      {
-        id:"name",
-        accessorKey: "name",
-        size:200,
-        header: () => <p className="ml-2">Name</p>,
-        cell: ({ getValue }) =>(
-          <span>{getValue<string>()}</span>
-        )
-      }
-    ],
-    []
-  )
-  ,
-    refineCoreProps:{
-      resource: "subject",
-       pagination:{
-      pageSize: 10,
-      mode:"server"
-    }
-    }
-  })
+  //     },
+  //     {
+  //       id:"name",
+  //       accessorKey: "name",
+  //       size:200,
+  //       header: () => <p className="ml-2">Name</p>,
+  //       cell: ({ getValue }) =>(
+  //         <span>{getValue<string>()}</span>
+  //       )
+  //     },
+  //     {
+  //       id:"department",
+  //       accessorKey: "department",
+  //       size:200,
+  //       header: () => <p className="ml-2">Department</p>,
+  //       cell: ({ getValue }) =>(
+  //         <span>{getValue<string>()}</span>
+  //       )
+  //     },
+  //     {
+  //         id:"description",
+  //         accessorKey: "description",
+  //         size:200,
+  //         header: () => <p className="ml-2">Description</p>,
+  //         cell: ({ getValue }) =>(
+  //           <span>{getValue<string>()}</span>
+  //         )
+  //     }
+  //   ],
+  //   []
+  // )
+  // ,
+  //   refineCoreProps:{
+  //     resource: "subject",
+  //      pagination:{
+  //     pageSize: 10,
+  //     mode:"server"
+  //   }
+  //   }
+  // })
   // console.log(subjectTable)
+  const subjectTable = useTable<Subject>({
+  columns: useMemo<ColumnDef<Subject>[]>(() => [
+    {
+      accessorKey: "code",
+      size: 120,
+      header: () => (
+        <p className="ml-2 text-xs font-semibold uppercase tracking-wide text-gray-600">
+          Code
+        </p>
+      ),
+      cell: ({ getValue }) => (
+        <Badge className="px-2 py-1 rounded-md bg-neutral-800 text-gray-200 text-xs font-medium">
+          {getValue<string>()}
+        </Badge>
+      ),
+    },
+
+    {
+      accessorKey: "name",
+      size: 220,
+      header: () => (
+        <p className="ml-2 text-xs font-semibold uppercase tracking-wide text-gray-600">
+          Name
+        </p>
+      ),
+      cell: ({ getValue }) => (
+        <span className="text-sm font-medium text-gray-600">
+          {getValue<string>()}
+        </span>
+      ),
+    },
+
+    {
+      accessorKey: "department",
+      size: 180,
+      header: () => (
+        <p className="ml-2 text-xs font-semibold uppercase tracking-wide text-gray-600">
+          Department
+        </p>
+      ),
+      cell: ({ getValue }) => (
+        <span className="text-xs px-2 py-1 rounded-md bg-neutral-800 text-gray-600">
+          {getValue<string>()}
+        </span>
+      ),
+    },
+
+    {
+      accessorKey: "description",
+      size: 300,
+      header: () => (
+        <p className="ml-2 text-xs font-semibold uppercase tracking-wide text-gray-600">
+          Description
+        </p>
+      ),
+      cell: ({ getValue }) => {
+        const text = getValue<string>();
+        return (
+          <p className="text-sm text-gray-500 line-clamp-2 max-w-xs">
+            {text}
+          </p>
+        );
+      },
+    },
+  ], []),
+
+  refineCoreProps: {
+    resource: "subject", 
+    pagination: {
+      pageSize: 10,
+      mode: "server",
+    },
+  },
+});
   return (
    <ListView>
     <Breadcrumb/>
